@@ -1,107 +1,111 @@
-CREATE TABLE UserRole (
-    ID INT PRIMARY KEY,
-    Name VARCHAR(25) NOT NULL
+CREATE DATABASE market_chapin;
+
+USE market_chapin;
+
+CREATE TABLE user_role (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(25) NOT NULL UNIQUE
 );
 
-CREATE TABLE Category (
-    ID INT PRIMARY KEY,
-    Name VARCHAR(30) NOT NULL
+CREATE TABLE category (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE
 );
 
-CREATE TABLE ShippingCompany (
-    ID INT PRIMARY KEY,
-    Name VARCHAR(60) NOT NULL
+CREATE TABLE shipping_company (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(60) NOT NULL
 );
 
-CREATE TABLE Product (
-    ID INT PRIMARY KEY,
-    Name VARCHAR(60) NOT NULL,
-    Description TEXT,
-    Price DECIMAL(10, 2),
-    Available BOOLEAN,
-    Interchangeable BOOLEAN,
-    CategoryID INT,
-    FOREIGN KEY (CategoryID) REFERENCES Category(ID)
+CREATE TABLE product (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(60) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2),
+    available BOOLEAN,
+    interchangeable BOOLEAN,
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES category(id)
 );
 
-CREATE TABLE User (
-    CUI INT PRIMARY KEY,
-    Username VARCHAR(25) NOT NULL,
-    Email VARCHAR(25) NOT NULL,
-    Name VARCHAR(60) NOT NULL,
-    Lastname VARCHAR(60) NOT NULL,
-    Phone VARCHAR(12),
-    Address TEXT,
-    RoleID INT,
-    Password VARCHAR(30) NOT NULL,
-    FOREIGN KEY (RoleID) REFERENCES UserRole(ID)
+CREATE TABLE user (
+    cui INT PRIMARY KEY,
+    username VARCHAR(25) NOT NULL UNIQUE,
+    email VARCHAR(25) NOT NULL UNIQUE,
+    name VARCHAR(60) NOT NULL,
+    lastname VARCHAR(60) NOT NULL,
+    phone VARCHAR(12),
+    address TEXT,
+    role_id INT,
+    password VARCHAR(30) NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES user_role(id)
 );
 
-CREATE TABLE UserInventory (
-    UserID INT,
-    ProductID INT,
-    PRIMARY KEY (UserID, ProductID),
-    FOREIGN KEY (UserID) REFERENCES User(CUI),
-    FOREIGN KEY (ProductID) REFERENCES Product(ID)
+CREATE TABLE user_inventory (
+    user_cui INT,
+    product_id INT,
+    PRIMARY KEY (user_cui, product_id),
+    FOREIGN KEY (user_cui) REFERENCES user(cui),
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );
 
-CREATE TABLE Post (
-    ID INT PRIMARY KEY,
-    UserCUI INT,
-    Description TEXT,
-    ProductID INT,
-    Date DATE,
-    State BOOLEAN,
-    FOREIGN KEY (UserCUI) REFERENCES User(CUI),
-    FOREIGN KEY (ProductID) REFERENCES Product(ID)
+CREATE TABLE post (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_cui INT,
+    description TEXT,
+    product_id INT,
+    date DATE,
+    state BOOLEAN,
+    FOREIGN KEY (user_cui) REFERENCES user(cui),
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );
 
-CREATE TABLE PostDetails (
-    PostID INT,
-    Amount DECIMAL(10, 2),
-    PaymentMethod VARCHAR(30),
-    PRIMARY KEY (PostID),
-    FOREIGN KEY (PostID) REFERENCES Post(ID)
+CREATE TABLE post_details (
+    post_id INT,
+    amount DECIMAL(10, 2),
+    payment_method VARCHAR(30),
+    PRIMARY KEY (post_id),
+    FOREIGN KEY (post_id) REFERENCES post(id)
 );
 
-CREATE TABLE Offer (
-    ID INT PRIMARY KEY,
-    UserCUI INT,
-    Description TEXT,
-    State BOOLEAN,
-    Date DATE,
-    FOREIGN KEY (UserCUI) REFERENCES User(CUI)
+CREATE TABLE offer (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_cui INT,
+    description TEXT,
+    state BOOLEAN,
+    date DATE,
+    FOREIGN KEY (user_cui) REFERENCES user(cui)
 );
 
-CREATE TABLE OfferDetails (
-    OfferID INT,
-    Amount DECIMAL(10, 2),
-    PaymentMethod VARCHAR(30),
-    PRIMARY KEY (OfferID),
-    FOREIGN KEY (OfferID) REFERENCES Offer(ID)
+CREATE TABLE offer_details (
+    offer_id INT,
+    amount DECIMAL(10, 2),
+    payment_method VARCHAR(30),
+    PRIMARY KEY (offer_id),
+    FOREIGN KEY (offer_id) REFERENCES offer(id)
 );
 
-CREATE TABLE Trade (
-    PostID INT,
-    OfferID INT,
-    Date DATE,
-    PRIMARY KEY (PostID, OfferID),
-    FOREIGN KEY (PostID) REFERENCES Post(ID),
-    FOREIGN KEY (OfferID) REFERENCES Offer(ID)
+CREATE TABLE trade (
+    post_id INT,
+    offer_id INT,
+    date DATE,
+    PRIMARY KEY (post_id, offer_id),
+    FOREIGN KEY (post_id) REFERENCES post(id),
+    FOREIGN KEY (offer_id) REFERENCES offer(id)
 );
 
-CREATE TABLE Shipping (
-    ID INT PRIMARY KEY,
-    Date DATE,
-    DepartureDate DATE,
-    DeliveryDate DATE,
-    TradePostID INT,
-    TradeOfferID INT,
-    ReceptorID INT,
-    SenderID INT,
-    ShippingCompanyID INT,
-    FOREIGN KEY (TradePostID, TradeOfferID) REFERENCES Trade(PostID, OfferID),
-    FOREIGN KEY (ReceptorID) REFERENCES User(CUI),
-    FOREIGN KEY (SenderID) REFERENCES User(CUI),
-    FOREIGN KEY (ShippingCompanyID) REFERENCES ShippingCompany(ID)
+CREATE TABLE shipping (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE,
+    departure_date DATE,
+    delivery_date DATE,
+    trade_post_id INT,
+    trade_offer_id INT,
+    receptor_id INT,
+    sender_id INT,
+    shipping_company_id INT,
+    FOREIGN KEY (trade_post_id, trade_offer_id) REFERENCES trade(post_id, offer_id),
+    FOREIGN KEY (receptor_id) REFERENCES user(cui),
+    FOREIGN KEY (sender_id) REFERENCES user(cui),
+    FOREIGN KEY (shipping_company_id) REFERENCES shipping_company(id)
 );
