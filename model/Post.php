@@ -15,11 +15,5 @@ class Post {
         $this->date = $date;
         $this->state = $state;
     }
-
-    public static function getAll($conn) {
-        $sql = "SELECT * FROM post";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 }
 ?>
