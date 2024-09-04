@@ -1,26 +1,28 @@
 <?php
-
 require_once '../database/Database.php';
+include '../model/user.php';
 
-$database = Database::getInstance();
-$conn = $database->getConnection();
+$db_instance = DatabaseConnection::getInstance();
+$db_connection = $db_instance->getConnection();
+$user = new User($db_connection);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $sql = "SELECT * FROM usuario WHERE Nombre_Usuario = '$username' AND Contraseña = '$password'";
-    $result = $conn->query($sql);
+    $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    if ($result->num_rows > 0) {
-        $response = array("success" => true, "message" => "Inicio de sesión exitoso.");
+    $isAuthenticated = $user->authenticate($username, $password);
+    if($isAuthenticated) {
+        session_start(); // Start or resume the session
+        $_SESSION['username'] = $username;
+        $response = ['success' => true, 'redirect' => '../view/index.html/'];
     } else {
-        $response = array("success" => false, "message" => "Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+        $response = ['success' => false, 'message' => 'Authentication fallida'];
     }
-
-    $conn->close();
-
+   
     header('Content-Type: application/json');
     echo json_encode($response);
+    exit;
 }
 ?>

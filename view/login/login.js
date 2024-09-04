@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             if (data.success) {
                 alert(data.message);
-                window.location.href = "timeline.html";
             } else {
                 alert(data.message);
             }

@@ -27,5 +27,20 @@ class User {
         $result = $conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function authenticate($username, $password) {
+        $query = "SELECT password FROM User WHERE username = ?";
+        $statement = $this->connection->prepare($query);
+        $statement->execute([$username]);
+    
+        $userData = $statement->fetch(PDO::FETCH_ASSOC);
+    
+        if ($userData) {
+          if (password_verify($password, $userData['password'])) {
+            return true;
+          }
+        }
+        return false;
+      }
 }
 ?>
