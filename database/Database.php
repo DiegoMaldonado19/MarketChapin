@@ -1,18 +1,39 @@
 <?php
-$servername = "localhost";
-$username = "tu_usuario";
-$password = "tu_contraseña";
-$dbname = "tu_base_de_datos";
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+class DatabaseConnection {
+  private  $host = "localhost";
+  private  $username = "root";
+  private  $password = "";
+  private  $database = "market_chapin";
+  private $connection;
+  private static $instance = null;
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+  
+  public function __construct() {
+    $this->createConnection();
+  }
+
+  private function createConnection() {
+    try {
+        $this->connection = new PDO(
+            "mysql:host=$this->host;dbname=$this->database", 
+            $this->username, 
+            $this->password);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $exception) {
+        die("Connection failed: " . $exception->getMessage());
+    }
+  }
+
+  public static function getInstance() {
+    if (self::$instance === null) {
+      self::$instance = new self();
+    }
+
+    return self::$instance;
+  }
+
+  public function getConnection() {
+    return $this->connection;
+  }
 }
-echo "Conexión exitosa";
-
-// Cerrar conexión
-$conn->close();
-?>

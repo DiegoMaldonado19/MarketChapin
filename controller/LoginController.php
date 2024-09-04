@@ -1,14 +1,9 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "market_chapin";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once '../database/Database.php';
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+$database = Database::getInstance();
+$conn = $database->getConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];

@@ -1,17 +1,10 @@
 <?php
 // Incluir el archivo de la clase Post
 include '../model/Post.php';
+require_once '../database/Database.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "market_chapin";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+$database = Database::getInstance();
+$conn = $database->getConnection();
 
 $sql = "SELECT * FROM post";
 $result = $conn->query($sql);
