@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formData.append("username", username);
         formData.append("password", password);
 
-        fetch("loginController.php", {
+        fetch("../controller/LoginController.php", {
             method: "POST",
             body: formData
         })
