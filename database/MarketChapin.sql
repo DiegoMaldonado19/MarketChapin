@@ -29,7 +29,7 @@ CREATE TABLE product (
 );
 
 CREATE TABLE user (
-    cui INT PRIMARY KEY,
+    cui VARCHAR(13) PRIMARY KEY UNIQUE,
     username VARCHAR(25) NOT NULL UNIQUE,
     email VARCHAR(25) NOT NULL UNIQUE,
     name VARCHAR(60) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE user (
 );
 
 CREATE TABLE user_inventory (
-    user_cui INT,
+    user_cui VARCHAR(13),
     product_id INT,
     PRIMARY KEY (user_cui, product_id),
     FOREIGN KEY (user_cui) REFERENCES user(cui),
@@ -51,7 +51,7 @@ CREATE TABLE user_inventory (
 
 CREATE TABLE post (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_cui INT,
+    user_cui VARCHAR(13),
     description TEXT,
     product_id INT,
     date DATE,
@@ -70,7 +70,7 @@ CREATE TABLE post_details (
 
 CREATE TABLE offer (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_cui INT,
+    user_cui VARCHAR(13),
     description TEXT,
     state BOOLEAN,
     date DATE,
@@ -101,8 +101,8 @@ CREATE TABLE shipping (
     delivery_date DATE,
     trade_post_id INT,
     trade_offer_id INT,
-    receptor_id INT,
-    sender_id INT,
+    receptor_id VARCHAR(13),
+    sender_id VARCHAR(13),
     shipping_company_id INT,
     FOREIGN KEY (trade_post_id, trade_offer_id) REFERENCES trade(post_id, offer_id),
     FOREIGN KEY (receptor_id) REFERENCES user(cui),
