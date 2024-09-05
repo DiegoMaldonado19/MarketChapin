@@ -1,28 +1,45 @@
 <?php
-require_once '../database/Database.php';
+
+require_once '../database/DatabaseConnection.php';
 include '../model/user.php';
 
-$db_instance = DatabaseConnection::getInstance();
-$db_connection = $db_instance->getConnection();
-$user = new User($db_connection);
+set_exception_handler(function($e) {
+    error_log('Error no manejado: ' . $e->getMessage());
+    header('Content-Type: application/json');
+    echo json_encode(array("success" => false, "message" => "Error interno del servidor."));
+    exit();
+});
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+try {
+    $db_instance = DatabaseConnection::getInstance();
+    $db_connection = $db_instance->getConnection();
+} catch (Exception $e) {
+    error_log('Error de conexión: ' . $e->getMessage());
+    header('Content-Type: application/json');
+    echo json_encode(array("success" => false, "message" => "Error de conexión a la base de datos."));
+    exit();
+}
 
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-    $isAuthenticated = $user->authenticate($username, $password);
-    if($isAuthenticated) {
-        session_start(); // Start or resume the session
-        $_SESSION['username'] = $username;
-        $response = ['success' => true, 'redirect' => '../view/index.html/'];
+    $stmt = $db_connection->prepare("SELECT * FROM user WHERE username = :username AND password = :password");
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        session_start();
+        $_SESSION['username'] = $user['username'];
+
+        $response = array("success" => true, "message" => "Inicio de sesión exitoso.");
     } else {
-        $response = ['success' => false, 'message' => 'Authentication fallida'];
+        $response = array("success" => false, "message" => "Credenciales incorrectas. Por favor, inténtalo de nuevo.");
     }
-   
+
     header('Content-Type: application/json');
     echo json_encode($response);
-    exit;
 }
 ?>

@@ -37,3 +37,4 @@ class DatabaseConnection {
     return $this->connection;
   }
 }
+?>
