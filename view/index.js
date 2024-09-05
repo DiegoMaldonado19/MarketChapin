@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let isAuthenticated = false;
+
     // Fetch session data
     fetch('../controller/SessionController.php')
         .then(response => response.json())
@@ -7,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const loginLink = document.querySelector('a[href="login/login.html"]');
 
             if (sessionData.authenticated) {
+                isAuthenticated = true;
                 // Mostrar mensaje de bienvenida
                 userContainer.innerHTML = `
                     <p>Bienvenido, ${sessionData.username}</p>
@@ -24,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     fetch('../controller/Loggout.php')
                         .then(response => response.json())
                         .then(data => {
-                            if (!data.authenticated) {
+                            if (data.authenticated == false) {
+                                // Recargar la página
                                 window.location.href = 'index.html';
                             }
                         })
@@ -53,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="card-text">${post.description}</p>
                             <p class="card-text">Fecha: ${post.date}</p>
                             <p class="card-text">Estado: ${post.state == 1 ? 'Disponible' : 'No disponible'}</p>
+                            ${isAuthenticated ? '<button class="btn btn-primary">Hacer oferta</button>' : ''}
                         </div>
                     </div>
                 `;

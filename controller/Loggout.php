@@ -13,5 +13,11 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
+$response = array(
+    "authenticated" => false
+);
+
+echo json_encode($response);
+
 exit();
 ?>
