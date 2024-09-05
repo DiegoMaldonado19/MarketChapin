@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="card mb-4">
                         <div class="card-body">
                             <h3 class="card-title h5">Producto ${post.product_id}</h3>
-                            <p class="card-text">${post.description}</p>
+                            <p class="card-text">Descripcion: ${post.description}</p>
                             <p class="card-text">Fecha: ${post.date}</p>
                             <p class="card-text">Estado: ${post.state == 1 ? 'Disponible' : 'No disponible'}</p>
                             ${isAuthenticated ? '<button class="btn btn-primary">Hacer oferta</button>' : ''}
