@@ -76,9 +76,11 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 4. Submit a pull request, explaining the changes you've made.
 
-## Credits
+## Autor ✒️
 
-This app was developed by [Diego Maldonado - 201931811] as a demonstration of web development skills using PHP, MySQL, JavaScript, HTML, and CSS.
+* **Diego José Maldonado Monterroso - 201931811**
+* **September 05, 2024.**
+* **Quetzaltenango, Guatemala.**
 
 ## License
 
