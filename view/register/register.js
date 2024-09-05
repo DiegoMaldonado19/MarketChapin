@@ -40,9 +40,12 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 if (data.success) {
                     alert(data.message);
+
                 } else {
                     alert(data.message);
                 }
+
+                window.location.href = "../index.html";
             })
             .catch(error => {
                 console.error("Error:", error);
