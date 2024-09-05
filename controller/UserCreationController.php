@@ -1,7 +1,7 @@
 <?php
 
 require_once '../database/DatabaseConnection.php';
-include '../model/user.php';
+include '../model/User.php';
 
 set_exception_handler(function($e) {
     error_log('Error no manejado: ' . $e->getMessage());
