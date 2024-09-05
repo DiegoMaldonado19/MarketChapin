@@ -17,11 +17,5 @@ class Product {
         $this->interchangeable = $interchangeable;
         $this->category_id = $category_id;
     }
-
-    public static function getAll($conn) {
-        $sql = "SELECT * FROM product";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 }
 ?>

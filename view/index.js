@@ -5,23 +5,35 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(sessionData => {
             const userContainer = document.getElementById('user-info');
             const loginLink = document.querySelector('a[href="login/login.html"]');
-            console.log("a");
-            if (sessionData.authenticated == true) {
+
+            if (sessionData.authenticated) {
                 // Mostrar mensaje de bienvenida
                 userContainer.innerHTML = `
                     <p>Bienvenido, ${sessionData.username}</p>
+                    <a id="logout-link" href="#">Cerrar Sesión</a>
                 `;
-                console.log("b");
                 // Ocultar enlace de "Inicio de Sesión"
                 if (loginLink) {
                     loginLink.style.display = 'none';
-                    console.log("c");
                 }
+
+                // Agregar evento de cierre de sesión
+                const logoutLink = document.getElementById('logout-link');
+                logoutLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    fetch('../controller/Loggout.php')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.authenticated) {
+                                window.location.href = 'index.html';
+                            }
+                        })
+                        .catch(error => console.error('Error logging out:', error));
+                });
             } else {
                 userContainer.innerHTML = `
-                    <p>Bienvenido!</p>
+                    <p>No has iniciado sesión.</p>
                 `;
-                console.log("d");
             }
         })
         .catch(error => console.error('Error fetching session data:', error));

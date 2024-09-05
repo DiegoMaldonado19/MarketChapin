@@ -21,11 +21,5 @@ class Shipping {
         $this->sender_id = $sender_id;
         $this->shipping_company_id = $shipping_company_id;
     }
-
-    public static function getAll($conn) {
-        $sql = "SELECT * FROM shipping";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 }
 ?>

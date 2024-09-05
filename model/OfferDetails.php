@@ -9,11 +9,5 @@ class OfferDetails {
         $this->amount = $amount;
         $this->payment_method = $payment_method;
     }
-
-    public static function getAll($conn) {
-        $sql = "SELECT * FROM offer_details";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 }
 ?>

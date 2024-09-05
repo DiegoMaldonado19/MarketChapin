@@ -23,12 +23,5 @@ class User
         $this->role_id = $role_id;
         $this->password = $password;
     }
-
-    public static function getAll($conn)
-    {
-        $sql = "SELECT * FROM user";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 }
 ?>
