@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="post.css">
+  <title>Registrar</title>
+</head>
+<body>
+<div class="container">
+  <h1>Registrar Datos</h1>
+  <form id="postCreationForm">
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <input type="text" id="description" name="description" required>
+    </div>
+    <div class="form-group">
+      <label for="product_name">Nombre Producto</label>
+      <input type="text" id="product_name" name="product_name" required>
+    </div>
+    <div class="form-group">
+      <label for="product_description">Descripcion Producto</label>
+      <input type="text" id="product_description" name="product_description" required>
+    </div>
+    <div class="form-group">
+      <label for="product_price">Precio Producto</label>
+      <input type="text" id="product_price" name="product_price" required>
+    </div>
+    <div class="form-group">
+      <label for="payment_method">Metodo de pago</label>
+      <input type="text" id="payment_method" name="payment_method" required>
+    </div>
+    <button type="submit">Crear Publicación</button>
+  </form>
+</div>
+
+<script src="post.js"></script>
+</body>
+</html>

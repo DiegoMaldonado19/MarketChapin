@@ -7,18 +7,27 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(sessionData => {
             const userContainer = document.getElementById('user-info');
             const loginLink = document.querySelector('a[href="login/login.html"]');
+            const navContainer = document.getElementById('link-container')
 
             if (sessionData.authenticated) {
                 isAuthenticated = true;
                 // Mostrar mensaje de bienvenida
                 userContainer.innerHTML = `
-                    <p>Bienvenido, ${sessionData.username}</p>
+                    <p>Bienvenido, ${sessionData.name} ${sessionData.lastname}</p>
                     <a id="logout-link" href="#">Cerrar Sesión</a>
                 `;
-                // Ocultar enlace de "Inicio de Sesión"
+
                 if (loginLink) {
                     loginLink.style.display = 'none';
                 }
+
+                navContainer.innerHTML = `
+                
+                <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="category/category.html">Categorías</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="shipping/shipping.html">Envíos</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="post/post.html">Publicar Producto</a></li>
+                `;
 
                 // Agregar evento de cierre de sesión
                 const logoutLink = document.getElementById('logout-link');
@@ -57,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="card-text">Descripcion: ${post.description}</p>
                             <p class="card-text">Fecha: ${post.date}</p>
                             <p class="card-text">Estado: ${post.state == 1 ? 'Disponible' : 'No disponible'}</p>
-                            ${isAuthenticated ? '<button class="btn btn-primary">Hacer oferta</button>' : ''}
+                            ${isAuthenticated ? '<button class="btn btn-primary" onclick="offerCreation()">Hacer oferta</button>' : ''}
                         </div>
                     </div>
                 `;

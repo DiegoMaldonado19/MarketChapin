@@ -32,7 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user) {
         session_start();
+        $_SESSION['user_cui'] = $user['cui'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['lastname'] = $user['lastname'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['phone'] = $user['phone'];
+        $_SESSION['address'] = $user['address'];
+
 
         $response = array("success" => true, "message" => "Inicio de sesión exitoso.");
     } else {
