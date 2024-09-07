@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="offer.css">
+  <title>Oferta</title>
+</head>
+<body>
+<div class="container">
+  <h1>Crear Oferta</h1>
+  <form id="offerCreationForm">
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <input type="text" id="description" name="description" required>
+    </div>
+    <div class="form-group">
+      <label for="amount">Monto oferta</label>
+      <input type="number" id="amount" name="amount" required>
+    </div>
+    <div class="form-group">
+      <label for="payment_method">Metodo de Pago</label>
+      <input type="text" id="payment_method" name="payment_method" required>
+    </div>
+    <button type="submit">Crear Oferta</button>
+  </form>
+</div>
+
+<script src="offer.js"></script>
+</body>
+</html>

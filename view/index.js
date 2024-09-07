@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="category/category.html">Categorías</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="shipping/shipping.html">Envíos</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="offer/offerViewer.html">Ver Ofertas</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="post/post.html">Publicar Producto</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="category/createCategory.html">Crear Categoria</a></li>
                 `;
 
                 // Agregar evento de cierre de sesión
@@ -75,3 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error fetching posts:', error));
 });
+
+function offerCreation(){
+    window.location.href = 'offer/offer.html';
+}
